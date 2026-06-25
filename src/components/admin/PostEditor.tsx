@@ -12,6 +12,7 @@ import {
 } from "@/app/admin/actions";
 import { gerarSlug } from "@/lib/format";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { PostPreview, type PreviewData } from "@/components/admin/PostPreview";
 
 const initial: FormState = {};
 
@@ -60,8 +61,26 @@ export function PostEditor({
 
   const [novaCat, setNovaCat] = useState("");
   const [criandoCat, setCriandoCat] = useState(false);
+  const [preview, setPreview] = useState<PreviewData | null>(null);
 
   const erro = (campo: string) => state.fieldErrors?.[campo];
+
+  function abrirPreview() {
+    const form = formRef.current;
+    if (!form) return;
+    const fd = new FormData(form);
+    const catId = String(fd.get("categoryId") ?? "");
+    setPreview({
+      title: String(fd.get("title") ?? ""),
+      author: String(fd.get("author") ?? ""),
+      categoryName: cats.find((c) => c.id === catId)?.name ?? "",
+      publishedAt: String(fd.get("publishedAt") ?? ""),
+      content,
+      coverUrl: coverPreview,
+      coverAlt: String(fd.get("coverImageAlt") ?? ""),
+      coverCredit: String(fd.get("coverImageCredit") ?? ""),
+    });
+  }
 
   function onTitleChange(v: string) {
     setTitle(v);
@@ -96,6 +115,7 @@ export function PostEditor({
     : toLocalInput(new Date());
 
   return (
+    <>
     <form ref={formRef} action={formAction} className="max-w-2xl">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-serif text-[1.8rem] font-bold text-texto-principal">
@@ -346,13 +366,20 @@ export function PostEditor({
         </label>
       </div>
 
-      <div className="mt-8 flex items-center gap-3">
+      <div className="mt-8 flex flex-wrap items-center gap-3">
         <button
           type="submit"
           disabled={pending}
           className="rounded-full bg-acento-hover px-5 py-2.5 font-bold text-fundo transition-colors hover:bg-texto-principal disabled:opacity-60"
         >
           {pending ? "Salvando..." : "Salvar"}
+        </button>
+        <button
+          type="button"
+          onClick={abrirPreview}
+          className="rounded-full border border-linha px-5 py-2.5 font-bold text-texto-secundario transition-colors hover:border-acento hover:text-acento-hover"
+        >
+          Visualizar
         </button>
         <Link
           href="/admin"
@@ -362,5 +389,10 @@ export function PostEditor({
         </Link>
       </div>
     </form>
+
+      {preview ? (
+        <PostPreview data={preview} onClose={() => setPreview(null)} />
+      ) : null}
+    </>
   );
 }

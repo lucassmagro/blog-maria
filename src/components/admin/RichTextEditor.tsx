@@ -3,7 +3,7 @@
 import { useEditor, EditorContent, type Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 
 type RichTextEditorProps = {
   value: string;
@@ -155,6 +155,14 @@ export function RichTextEditor({ value, onChange }: RichTextEditorProps) {
       onChange(editor.getHTML());
     },
   });
+
+  // Sincroniza alterações externas (ex.: edição feita no preview) sem loop:
+  // só reescreve quando o valor recebido difere do conteúdo atual do editor.
+  useEffect(() => {
+    if (editor && !editor.isDestroyed && value !== editor.getHTML()) {
+      editor.commands.setContent(value, false);
+    }
+  }, [value, editor]);
 
   return (
     <div className="overflow-hidden rounded-md border border-linha focus-within:border-acento">

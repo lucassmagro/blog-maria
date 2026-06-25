@@ -1,13 +1,13 @@
 "use client";
 
 import { formatarDataPtBr, tempoDeLeitura } from "@/lib/format";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
 
 export type PreviewData = {
   title: string;
   author: string;
   categoryName: string;
   publishedAt: string; // valor do input datetime-local
-  content: string; // HTML do editor
   coverUrl: string | null;
   coverAlt: string;
   coverCredit: string;
@@ -18,15 +18,19 @@ function textoPuro(html: string): string {
 }
 
 /**
- * Pré-visualização do post como ele aparecerá publicado. Reproduz o layout do
- * artigo público (masthead, hero, corpo serifado, capitular), a partir dos
- * valores atuais do formulário — sem salvar nem publicar.
+ * Pré-visualização do post como ele aparecerá publicado, a partir dos valores
+ * atuais do formulário — sem salvar nem publicar. O corpo do texto é editável
+ * aqui mesmo (o conteúdo fica sincronizado com o editor do formulário).
  */
 export function PostPreview({
   data,
+  content,
+  onContentChange,
   onClose,
 }: {
   data: PreviewData;
+  content: string;
+  onContentChange: (html: string) => void;
   onClose: () => void;
 }) {
   const multiplasAutoras = data.author.includes(" e ");
@@ -34,7 +38,7 @@ export function PostPreview({
   const dataISO = data.publishedAt
     ? new Date(data.publishedAt).toISOString()
     : new Date().toISOString();
-  const leitura = tempoDeLeitura(textoPuro(data.content));
+  const leitura = tempoDeLeitura(textoPuro(content));
 
   return (
     <div className="fixed inset-0 z-50 overflow-auto bg-fundo">
@@ -42,14 +46,14 @@ export function PostPreview({
       <div className="sticky top-0 z-10 border-b border-linha bg-fundo/95 backdrop-blur">
         <div className="mx-auto flex w-full max-w-[var(--container-leitura)] items-center justify-between px-5 py-3">
           <span className="text-[0.75rem] font-bold uppercase tracking-[1px] text-acento">
-            Pré-visualização
+            Pré-visualização · corpo editável
           </span>
           <button
             type="button"
             onClick={onClose}
             className="rounded-full border border-linha px-4 py-1.5 text-[0.85rem] font-bold text-texto-secundario transition-colors hover:border-acento hover:text-acento-hover"
           >
-            Fechar
+            Concluir
           </button>
         </div>
       </div>
@@ -93,16 +97,8 @@ export function PostPreview({
           </figure>
         ) : null}
 
-        {textoPuro(data.content) ? (
-          <div
-            className="conteudo-artigo corpo-serif conteudo-artigo--capitular"
-            dangerouslySetInnerHTML={{ __html: data.content }}
-          />
-        ) : (
-          <p className="text-texto-secundario">
-            (Sem conteúdo ainda. Escreva no editor para ver aqui.)
-          </p>
-        )}
+        {/* Corpo editável, com o mesmo visual do artigo publicado */}
+        <RichTextEditor value={content} onChange={onContentChange} />
 
         <footer className="mt-12 border-t border-linha pt-6">
           <h2 className="text-[1.3rem]">{rotuloAutoria}</h2>

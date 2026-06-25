@@ -75,7 +75,6 @@ export function PostEditor({
       author: String(fd.get("author") ?? ""),
       categoryName: cats.find((c) => c.id === catId)?.name ?? "",
       publishedAt: String(fd.get("publishedAt") ?? ""),
-      content,
       coverUrl: coverPreview,
       coverAlt: String(fd.get("coverImageAlt") ?? ""),
       coverCredit: String(fd.get("coverImageCredit") ?? ""),
@@ -391,7 +390,12 @@ export function PostEditor({
     </form>
 
       {preview ? (
-        <PostPreview data={preview} onClose={() => setPreview(null)} />
+        <PostPreview
+          data={preview}
+          content={content}
+          onContentChange={setContent}
+          onClose={() => setPreview(null)}
+        />
       ) : null}
     </>
   );

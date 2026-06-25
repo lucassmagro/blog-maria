@@ -220,7 +220,7 @@ export function BlogIndex({ posts, categories, authors }: BlogIndexProps) {
             />
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-2 min-[560px]:justify-end">
+          <div className="flex items-center justify-between gap-2 min-[560px]:justify-end">
           <div
             className="flex shrink-0 items-center gap-1 rounded-full border border-linha p-1"
             role="group"
@@ -257,9 +257,9 @@ export function BlogIndex({ posts, categories, authors }: BlogIndexProps) {
             type="button"
             onClick={() => setFiltrosAbertos((v) => !v)}
             aria-expanded={filtrosAbertos}
-            className="inline-flex items-center gap-1.5 rounded-full border border-linha px-3 py-2 text-[0.8rem] font-bold text-texto-secundario min-[900px]:hidden"
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-linha px-3 py-2 text-[0.8rem] font-bold text-texto-secundario min-[900px]:hidden"
           >
-            Filtrar e ordenar
+            Filtros
             <ChevronDownIcon
               width={16}
               height={16}

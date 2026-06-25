@@ -1,0 +1,253 @@
+@import "tailwindcss";
+
+/*
+  ----------------------------------------------------------------------------
+  Cátedra Política — sistema de identidade visual
+  As seis cores da marca, extraídas do style.css original, ficam centralizadas
+  aqui como tokens do Tailwind v4. Toda a paleta da publicação parte daqui.
+  ----------------------------------------------------------------------------
+*/
+@theme {
+  --color-fundo: #f0ebe3;            /* Bege/creme quente — fundo */
+  --color-texto-principal: #4e342e;  /* Marrom espresso — texto principal */
+  --color-texto-secundario: #795548; /* Marrom café — texto secundário */
+  --color-acento: #8d6e63;           /* Marrom cappuccino — acento */
+  --color-acento-hover: #5d4037;     /* Marrom escuro — hover */
+  --color-borda-titulo: #c0a898;     /* Tan — sublinhado de título e rodapé */
+
+  /* Tan suave para divisórias discretas (derivado do borda-titulo) */
+  --color-linha: #e0d6ca;
+
+  /* Rodapé (tokens próprios para não inverter no dark mode) */
+  --color-rodape-bg: #4e342e;
+  --color-rodape-fg: #f0ebe3;
+
+  --font-serif: var(--font-playfair), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-roboto), system-ui, sans-serif;
+  --font-texto-serif: var(--font-source-serif), Georgia, serif;
+
+  /* Largura da coluna de leitura (~66–72 caracteres), estilo Medium */
+  --container-leitura: 42.5rem; /* ~680px */
+}
+
+/*
+  ----------------------------------------------------------------------------
+  Dark mode — a mesma identidade quente, agora em espresso escuro. Apenas
+  redefine os tokens de cor; todos os utilitários (bg-fundo, text-... etc.)
+  herdam automaticamente. Ativado pela classe .dark no <html>.
+  ----------------------------------------------------------------------------
+*/
+.dark {
+  --color-fundo: #211b17; /* espresso quase preto, quente */
+  --color-texto-principal: #efe7dd; /* creme */
+  --color-texto-secundario: #c2b2a4; /* tan suave */
+  --color-acento: #b59a8b;
+  --color-acento-hover: #d8c3b5; /* claro para links/hover sobre o escuro */
+  --color-borda-titulo: #6f5d50;
+  --color-linha: #38302a; /* divisória discreta no escuro */
+  --color-rodape-bg: #18120f;
+  --color-rodape-fg: #efe7dd;
+  color-scheme: dark;
+}
+
+:root {
+  color-scheme: light;
+}
+
+/* --- Base --- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-fundo);
+    color: var(--color-texto-principal);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    color: var(--color-texto-principal);
+    line-height: 1.15;
+  }
+
+  /* Anel de foco acessível dentro da paleta marrom */
+  :focus-visible {
+    outline: 2px solid var(--color-acento-hover);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/*
+  ----------------------------------------------------------------------------
+  Corpo do artigo (.conteudo-artigo)
+  Experiência de leitura calma e moderna (referência Medium / blog da Anthropic),
+  vestida com a identidade quente da Cátedra. Ritmo vertical generoso, medida
+  confortável e tipografia cuidada. A fonte do corpo é escolhida por
+  .corpo-serif (padrão) ou .corpo-sans.
+  ----------------------------------------------------------------------------
+*/
+.conteudo-artigo {
+  font-size: 1.25rem; /* ~20px */
+  line-height: 1.75;
+  color: var(--color-texto-principal);
+  letter-spacing: 0.003em;
+}
+
+.corpo-serif {
+  font-family: var(--font-texto-serif);
+}
+
+.corpo-sans {
+  font-family: var(--font-sans);
+  font-size: 1.2rem; /* Roboto pede um corpo levemente menor */
+}
+
+.conteudo-artigo > * + * {
+  margin-top: 1.6rem;
+}
+
+.conteudo-artigo p {
+  text-wrap: pretty;
+}
+
+.conteudo-artigo a {
+  color: var(--color-acento-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--color-borda-titulo);
+  transition: text-decoration-color 0.2s ease, color 0.2s ease;
+}
+
+.conteudo-artigo a:hover {
+  color: var(--color-texto-principal);
+  text-decoration-color: var(--color-acento-hover);
+}
+
+.conteudo-artigo h2,
+.conteudo-artigo h3 {
+  font-family: var(--font-serif);
+  margin-top: 2.75rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.conteudo-artigo h2 {
+  font-size: 1.9rem;
+}
+
+.conteudo-artigo h3 {
+  font-size: 1.5rem;
+}
+
+.conteudo-artigo blockquote {
+  font-family: var(--font-texto-serif);
+  font-style: italic;
+  color: var(--color-texto-secundario);
+  padding-left: 1.4rem;
+  border-left: 3px solid var(--color-acento);
+  font-size: 1.3rem;
+  line-height: 1.6;
+}
+
+.conteudo-artigo ul,
+.conteudo-artigo ol {
+  margin-left: 1.4rem;
+}
+
+.conteudo-artigo ul {
+  list-style: disc;
+}
+
+.conteudo-artigo ol {
+  list-style: decimal;
+}
+
+.conteudo-artigo li + li {
+  margin-top: 0.5rem;
+}
+
+.conteudo-artigo li::marker {
+  color: var(--color-acento);
+}
+
+.conteudo-artigo strong {
+  font-weight: 700;
+}
+
+.conteudo-artigo em {
+  font-style: italic;
+}
+
+.conteudo-artigo figure {
+  margin-top: 2.25rem;
+  margin-bottom: 2.25rem;
+}
+
+.conteudo-artigo figure img {
+  width: 100%;
+}
+
+.conteudo-artigo figcaption {
+  margin-top: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--color-texto-secundario);
+}
+
+.conteudo-artigo hr {
+  border: 0;
+  border-top: 1px solid var(--color-linha);
+  margin: 2.5rem auto;
+  width: 40%;
+}
+
+/*
+  Toque editorial único (Seção 4): capitular discreta e intencional na primeira
+  letra do primeiro parágrafo. Em serifada de display, no tom da marca.
+*/
+.conteudo-artigo--capitular > p:first-of-type::first-letter {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 3.6rem;
+  line-height: 0.82;
+  float: left;
+  margin-right: 0.55rem;
+  margin-top: 0.42rem;
+  color: var(--color-texto-principal);
+}
+
+@media (max-width: 600px) {
+  .conteudo-artigo {
+    font-size: 1.15rem;
+  }
+  .corpo-sans {
+    font-size: 1.1rem;
+  }
+  .conteudo-artigo h2 {
+    font-size: 1.6rem;
+  }
+  .conteudo-artigo h3 {
+    font-size: 1.35rem;
+  }
+  .conteudo-artigo--capitular > p:first-of-type::first-letter {
+    font-size: 3.1rem;
+  }
+}

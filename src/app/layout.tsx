@@ -65,10 +65,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body>
-        {/* Define o tema antes da pintura para evitar flash (FOUC). */}
+        {/* Define o tema antes da pintura para evitar flash (FOUC).
+            Padrão é claro; só fica escuro se a pessoa já tiver escolhido. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('tema');var d=t?t==='escuro':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');}catch(e){}})();`,
+            __html: `(function(){try{if(localStorage.getItem('tema')==='escuro')document.documentElement.classList.add('dark');}catch(e){}})();`,
           }}
         />
         {children}

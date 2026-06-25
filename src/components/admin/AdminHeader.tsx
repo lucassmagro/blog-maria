@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { signOut } from "@/app/admin/actions";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function AdminHeader({ email }: { email?: string }) {
   return (
@@ -30,6 +31,7 @@ export function AdminHeader({ email }: { email?: string }) {
           >
             Ver site
           </Link>
+          <ThemeToggle />
           <form action={signOut}>
             <button
               type="submit"

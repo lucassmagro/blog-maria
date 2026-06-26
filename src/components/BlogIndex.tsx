@@ -198,7 +198,7 @@ export function BlogIndex({ posts, categories, authors }: BlogIndexProps) {
   return (
     <div className="grid grid-cols-1 gap-8 min-[900px]:grid-cols-[220px_1fr] min-[900px]:gap-12">
       {/* Barra lateral (desktop) */}
-      <aside className="hidden min-[900px]:block">
+      <aside className="hidden min-[900px]:block min-[900px]:sticky min-[900px]:top-6 min-[900px]:self-start min-[900px]:max-h-[calc(100vh-3rem)] min-[900px]:overflow-y-auto">
         <h2 className="mb-1 pb-1 text-[0.95rem] font-semibold text-texto-principal">
           Filtrar e ordenar
         </h2>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SITE } from "@/lib/site";
+import { LockIcon } from "@/components/icons";
 
 export function SiteFooter() {
   const ano = new Date().getFullYear();
@@ -44,14 +45,18 @@ export function SiteFooter() {
         >
           Lucas Santos Magro
         </a>
-        {/* Acesso discreto ao painel administrativo */}
+      </div>
+
+      {/* Acesso ao painel administrativo */}
+      <div className="bg-black/25 px-5 pb-4 text-center">
         <Link
           href="/admin"
           aria-label="Painel administrativo"
           title="Painel administrativo"
-          className="ml-2 select-none text-transparent transition-colors hover:text-rodape-fg/60"
+          className="inline-flex items-center gap-1.5 rounded-md bg-white/10 px-3 py-1.5 text-[0.8rem] font-bold text-rodape-fg/80 transition-colors hover:bg-white/15 hover:text-white"
         >
-          ·
+          <LockIcon width={14} height={14} />
+          Painel
         </Link>
       </div>
     </footer>

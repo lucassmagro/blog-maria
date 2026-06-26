@@ -7,7 +7,7 @@ export function SiteFooter() {
 
   return (
     <footer className="mt-16 bg-rodape-bg text-rodape-fg">
-      <div className="px-5 py-10 text-center">
+      <div className="relative px-5 py-10 text-center">
         <nav
           aria-label="Redes sociais"
           className="mb-4 flex items-center justify-center gap-5"
@@ -35,7 +35,7 @@ export function SiteFooter() {
       </div>
 
       {/* Crédito do desenvolvedor — faixa em marrom mais escuro */}
-      <div className="bg-black/25 px-5 py-3 text-center text-[0.8rem] text-rodape-fg/75">
+      <div className="relative bg-black/25 px-5 py-3 text-center text-[0.8rem] text-rodape-fg/75">
         Feito por{" "}
         <a
           href="https://lucasmagro.vercel.app/"
@@ -45,15 +45,13 @@ export function SiteFooter() {
         >
           Lucas Santos Magro
         </a>
-      </div>
 
-      {/* Acesso ao painel administrativo */}
-      <div className="bg-black/25 px-5 pb-4 text-center">
+        {/* Acesso ao painel administrativo — esquerda, alinhado ao texto */}
         <Link
           href="/admin"
           aria-label="Painel administrativo"
           title="Painel administrativo"
-          className="inline-flex items-center gap-1.5 rounded-md bg-white/10 px-3 py-1.5 text-[0.8rem] font-bold text-rodape-fg/80 transition-colors hover:bg-white/15 hover:text-white"
+          className="absolute left-5 top-1/2 inline-flex -translate-y-1/2 items-center gap-1.5 rounded-md bg-white/10 px-3 py-1.5 text-[0.8rem] font-bold text-rodape-fg/80 transition-colors hover:bg-white/15 hover:text-white"
         >
           <LockIcon width={14} height={14} />
           Painel

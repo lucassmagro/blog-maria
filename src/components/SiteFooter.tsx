@@ -51,7 +51,7 @@ export function SiteFooter() {
           href="/admin"
           aria-label="Painel administrativo"
           title="Painel administrativo"
-          className="absolute left-5 top-1/2 inline-flex -translate-y-1/2 items-center gap-1.5 rounded-md bg-white/10 px-3 py-1.5 text-[0.8rem] font-bold text-rodape-fg/80 transition-colors hover:bg-white/15 hover:text-white"
+          className="absolute left-5 top-1/2 inline-flex -translate-y-1/2 items-center gap-1.5 text-[0.8rem] font-bold text-rodape-fg/55 transition-colors hover:text-rodape-fg"
         >
           <LockIcon width={14} height={14} />
           Painel
